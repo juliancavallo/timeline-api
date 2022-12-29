@@ -3,7 +3,7 @@ const pool = require('../db/dbconnection');
 
 controller.getAll = (req, res) => {
     pool.getConnection((err, conn) => {
-        conn.query('select * from Timeline', (queryError, rows) => {
+        conn.query('select * from TimelineEvent where IdTimeline = ? order by Date asc', [req.params.idTimeline], (queryError, rows) => {
             if(queryError) {
                 console.log(queryError);
                 res.status(500).json({
@@ -18,7 +18,7 @@ controller.getAll = (req, res) => {
 
 controller.save = (req, res) => {
     pool.getConnection((err, conn) => {
-        conn.query('insert into Timeline set ?', [req.body], (queryError, rows) => {
+        conn.query('insert into TimelineEvent set ?', [req.body], (queryError, rows) => {
             if(queryError){
                 console.log(queryError);
                 res.status(500).json({
@@ -33,7 +33,7 @@ controller.save = (req, res) => {
 
 controller.update = (req, res) => {
     pool.getConnection((err, conn) => {
-        conn.query('update Timeline set ? where id = ?', [req.body, req.params.id], (queryError, rows) => {
+        conn.query('update TimelineEvent set ? where id = ?', [req.body, req.params.id], (queryError, rows) => {
             if(queryError){
                 console.log(queryError);
                 res.status(500).json({
@@ -48,7 +48,7 @@ controller.update = (req, res) => {
 
 controller.delete = (req, res) => {
     pool.getConnection((err, conn) => {
-        conn.query('delete from Timeline where id = ?', [req.params.id], (queryError, rows) => {
+        conn.query('delete from TimelineEvent where id = ?', [req.params.id], (queryError, rows) => {
             if(queryError){
                 console.log(queryError);
                 res.status(500).json({
