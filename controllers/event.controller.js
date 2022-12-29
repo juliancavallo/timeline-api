@@ -11,7 +11,13 @@ controller.getAll = (req, res) => {
                 })
             }
             else 
-                res.json(rows);
+                res.json(rows.map(x => ({
+                    id: x.Id,
+                    title: x.Title,
+                    summary: x.Summary,
+                    idTimeline: x.IdTimeline,
+                    date: x.Date
+                })));
         });
     });
 }
