@@ -37,6 +37,24 @@ controller.save = (req, res) => {
     });
 }
 
+controller.saveBulk = (req, res) => {
+    pool.getConnection((err, conn) => {
+        const query = `insert into TimelineEvent (Title, Summary, Date, IdTimeline) values ${req.body.map(x => `('${x.title}', '${x.summary}', '${x.date}', ${x.idTimeline})`).join(",")}`;
+        console.log(query);
+        conn.query(query, (queryError, rows) => {
+        
+            if(queryError){
+                console.log(queryError);
+                res.status(500).json({
+                    "message": "An error has occurred"
+                })
+            }
+            else 
+                res.send("Inserted bulk");
+        });
+    });
+}
+
 controller.update = (req, res) => {
     pool.getConnection((err, conn) => {
         conn.query('update TimelineEvent set ? where id = ?', [req.body, req.params.id], (queryError, rows) => {
