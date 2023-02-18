@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = express.Router();
-const controller = require('../controllers/event.controller')
+const controller = require('../controllers/event.controller');
+const auth = require("../middleware/auth");
 
 routes.get('/events/:idTimeline', controller.getAll);
 routes.post('/events', auth, controller.save);
