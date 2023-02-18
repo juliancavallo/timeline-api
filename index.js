@@ -3,6 +3,7 @@ const cors = require('cors');
 const indexRoutes = require('./routes/index.routes.js')
 const timelineRoutes = require('./routes/timeline.routes')
 const eventRoutes = require('./routes/event.routes')
+const securityRoutes = require('./routes/security.routes')
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(indexRoutes);
 app.use(timelineRoutes);
 app.use(eventRoutes);
+app.use(securityRoutes);
 
 //startup
 app.listen(app.get('port'), () => {

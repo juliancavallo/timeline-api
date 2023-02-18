@@ -51,7 +51,7 @@ controller.update = (req, res) => {
 
 controller.delete = (req, res) => {
     pool.getConnection((err, conn) => {
-        conn.query('delete from Timeline where id = ?', [req.params.id], (queryError, rows) => {
+        conn.query('delete from Timeline where id = ?; delete from TimelineEvent where IdTimeline = ?', [req.params.id, req.params.id], (queryError, rows) => {
             if(queryError){
                 console.log(queryError);
                 res.status(500).json({
